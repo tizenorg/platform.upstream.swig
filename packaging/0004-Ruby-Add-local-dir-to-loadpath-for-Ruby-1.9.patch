@@ -1,0 +1,25 @@
+From 2d3dee536c869b2c5aff71a29d406353039b5007 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Klaus=20K=C3=A4mpf?= <kkaempf@suse.de>
+Date: Sat, 26 May 2012 18:27:30 +0200
+Subject: [PATCH 04/10] Ruby: Add local dir to loadpath for Ruby 1.9
+
+---
+ Examples/test-suite/ruby/Makefile.in |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Examples/test-suite/ruby/Makefile.in b/Examples/test-suite/ruby/Makefile.in
+index e157e72..e11e581 100644
+--- a/Examples/test-suite/ruby/Makefile.in
++++ b/Examples/test-suite/ruby/Makefile.in
+@@ -61,7 +61,7 @@ ruby_naming.cpptest: SWIGOPT += -autorename
+ # a file is found which has _runme.rb appended after the testcase name.
+ run_testcase = \
+ 	if [ -f $(srcdir)/$(SCRIPTPREFIX)$*$(SCRIPTSUFFIX) ]; then \
+-	  env LD_LIBRARY_PATH=.:$$LD_LIBRARY_PATH $(RUNTOOL) $(RUBY) $(srcdir)/$(SCRIPTPREFIX)$*$(SCRIPTSUFFIX); \
++	  env LD_LIBRARY_PATH=.:$$LD_LIBRARY_PATH $(RUNTOOL) $(RUBY) -I. -I$(srcdir) $(srcdir)/$(SCRIPTPREFIX)$*$(SCRIPTSUFFIX); \
+ 	fi
+ 
+ # Clean
+-- 
+1.7.9.2
+

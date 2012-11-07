@@ -1,0 +1,34 @@
+From aa7b4489f8336647edb08a30f7ab95b7e675806d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Klaus=20K=C3=A4mpf?= <kkaempf@suse.de>
+Date: Sun, 27 May 2012 15:28:45 +0200
+Subject: [PATCH] Fix call to Swig_name_decl (upstream ID 3530078)
+
+---
+ Source/Modules/lang.cxx |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Source/Modules/lang.cxx b/Source/Modules/lang.cxx
+index 8fb5069..b7ce502 100644
+--- a/Source/Modules/lang.cxx
++++ b/Source/Modules/lang.cxx
+@@ -2623,7 +2623,7 @@ int Language::constructorDeclaration(Node *n) {
+ 	  Delete(expected_name_resolved);
+ 	}
+ 	if (illegal_name) {
+-	  Swig_warning(WARN_LANG_RETURN_TYPE, input_file, line_number, "Function %s must have a return type. Ignored.\n", Swig_name_decl(name));
++	  Swig_warning(WARN_LANG_RETURN_TYPE, input_file, line_number, "Function %s must have a return type. Ignored.\n", Swig_name_decl(n));
+ 	  Swig_restore(n);
+ 	  return SWIG_NOWRAP;
+ 	}
+@@ -2760,7 +2760,7 @@ int Language::destructorDeclaration(Node *n) {
+     }
+ 
+     if (illegal_name) {
+-      Swig_warning(WARN_LANG_ILLEGAL_DESTRUCTOR, input_file, line_number, "Illegal destructor name %s. Ignored.\n", Swig_name_decl(name));
++      Swig_warning(WARN_LANG_ILLEGAL_DESTRUCTOR, input_file, line_number, "Illegal destructor name %s. Ignored.\n", Swig_name_decl(n));
+       Swig_restore(n);
+       Delete(expected_name);
+       return SWIG_NOWRAP;
+-- 
+1.7.9.2
+
