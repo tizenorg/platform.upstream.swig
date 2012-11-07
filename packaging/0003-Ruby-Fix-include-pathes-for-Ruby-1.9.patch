@@ -1,0 +1,27 @@
+From 21f5bad365aa27b6c9bcb32be5a5e217d437c15d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Klaus=20K=C3=A4mpf?= <kkaempf@suse.de>
+Date: Sat, 26 May 2012 18:26:26 +0200
+Subject: [PATCH 03/10] Ruby: Fix include pathes for Ruby 1.9
+
+---
+ configure.in |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/configure.in b/configure.in
+index 8903d28..9d050fc 100644
+--- a/configure.in
++++ b/configure.in
+@@ -1341,7 +1341,9 @@ if test -n "$RUBY"; then
+ 			fi
+ 		done
+ 		if test "$RUBYINCLUDE" = none; then
+-			RUBYINCLUDE="-I$RUBYDIR"
++                        RUBYINCLUDE=`($RUBY -rrbconfig -e 'print RbConfig::CONFIG[["rubyhdrdir"]] || $rubyhdrdir') 2>/dev/null`
++                        RUBYARCH=`($RUBY -rrbconfig -e 'print RbConfig::CONFIG[["arch"]] || $arch') 2>/dev/null`
++			RUBYINCLUDE="-I$RUBYINCLUDE -I$RUBYINCLUDE/$RUBYARCH"
+ 			AC_MSG_RESULT(could not locate ruby.h...using $RUBYINCLUDE)
+ 		fi
+ 
+-- 
+1.7.9.2
+
