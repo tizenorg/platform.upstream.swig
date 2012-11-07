@@ -1,0 +1,25 @@
+Index: swig-2.0.4/Lib/guile/guile_scm_run.swg
+===================================================================
+--- swig-2.0.4.orig/Lib/guile/guile_scm_run.swg
++++ swig-2.0.4/Lib/guile/guile_scm_run.swg
+@@ -60,16 +60,17 @@ static swig_module_info *SWIG_Guile_GetM
+ SWIGINTERN char *
+ SWIG_Guile_scm2newstr(SCM str, size_t *len) {
+ #define FUNC_NAME "SWIG_Guile_scm2newstr"
+-  char *ret;
++  char *ret, *tmp;
+   size_t l;
+ 
+   SCM_ASSERT (SCM_STRINGP(str), str, 1, FUNC_NAME);
+   
+-  l = SCM_STRING_LENGTH(str);
++  tmp = scm_to_utf8_string(str);
++  memcpy(ret, tmp, l);
++  free(tmp);
+   ret = (char *) SWIG_malloc( (l + 1) * sizeof(char));
+   if (!ret) return NULL;
+ 
+-  memcpy(ret, SCM_STRING_CHARS(str), l);
+   ret[l] = '\0';
+   if (len) *len = l;
+   return ret;
