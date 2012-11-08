@@ -1,21 +1,3 @@
-#
-# spec file for package swig
-#
-# Copyright (c) 2012 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#
-# All modifications and additions to the file contributed by third parties
-# remain the property of their copyright owners, unless otherwise agreed
-# upon. The license for this file, and modifications and additions to the
-# file, is the same license as for the pristine package itself (unless the
-# license for the pristine package is not an Open Source License, in which
-# case the license is the MIT License). An "Open Source License" is a
-# license that conforms to the Open Source Definition (Version 1.9)
-# published by the Open Source Initiative.
-
-# Please submit bugfixes or comments via http://bugs.opensuse.org/
-#
-
-
 Name:           swig
 Version:        2.0.7
 Release:        0
@@ -25,18 +7,6 @@ Url:            http://www.swig.org/
 Group:          Development/Languages/C and C++
 Source:         http://sourceforge.net/projects/swig/files/swig/%{name}-%{version}/%{name}-%{version}.tar.gz
 Source1:        %{name}.rpmlintrc
-# PATCH-FIX-UPSTREAM swig-2.0.4-guile2.patch pgajdos@suse.com -- generate guile 2 friendly code
-Patch0:         swig-2.0.4-guile2.patch
-# PATCH-PENDING-UPSTREAM - Ruby 1.9 - kkaempf@suse.de
-Patch1:         0001-Ruby-replace-obsolete-STR2CSTR-macro-with-StringValu.patch
-Patch2:         0002-Ruby-use-RbConfig-instead-of-deprecated-Config-modul.patch
-Patch3:         0003-Ruby-Fix-include-pathes-for-Ruby-1.9.patch
-Patch4:         0004-Ruby-Add-local-dir-to-loadpath-for-Ruby-1.9.patch
-Patch5:         0007-Ruby-1.9-methods-returns-array-of-Symbols-now.patch
-Patch6:         0008-Ruby-Disable-broken-tests.patch
-Patch7:         0012-Python-Disable-broken-test-in-threads_exception.patch
-# Upstream ID 3530078
-Patch8:         0013-Fix-call-to-Swig_name_decl-upstream-ID-3530078.patch
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  boost-devel
@@ -48,7 +18,6 @@ BuildRequires:  pcre-devel
 BuildRequires:  perl
 BuildRequires:  pkg-config
 BuildRequires:  python-devel
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 %description
 SWIG is a compiler that attempts to make it easy to integrate C, C++,
@@ -100,17 +69,6 @@ understandig SWIG usage.
 
 %prep
 %setup -q
-# guile 2 from 12.1
-%patch0 -p1
-# Ruby 1.9 from 12.1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
 
 %build
 sh autogen.sh
