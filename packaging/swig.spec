@@ -7,6 +7,7 @@ Url:            http://www.swig.org/
 Group:          Development/Languages/C and C++
 Source:         http://sourceforge.net/projects/swig/files/swig/%{name}-%{version}/%{name}-%{version}.tar.gz
 Source1:        %{name}.rpmlintrc
+Source1001: 	swig.manifest
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  boost-devel
@@ -69,6 +70,7 @@ understandig SWIG usage.
 
 %prep
 %setup -q
+cp %{SOURCE1001} .
 
 %build
 sh autogen.sh
@@ -105,6 +107,7 @@ ln -s %{_libdir}/swig/examples %{buildroot}%{docpath}/Examples
 %fdupes %{buildroot}
 
 %files
+%manifest %{name}.manifest
 %defattr(644,root,root,755)
 %dir %{docpath}
 %{docpath}/[A-Z][A-Z]*
@@ -112,11 +115,13 @@ ln -s %{_libdir}/swig/examples %{buildroot}%{docpath}/Examples
 %attr(755,root,root) %{_bindir}/swig
 
 %files doc
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %{docpath}/Devel
 %{docpath}/Manual
 
 %files examples
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %{docpath}/Examples
 %{_libdir}/swig
