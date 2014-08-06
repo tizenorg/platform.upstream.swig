@@ -11,8 +11,6 @@
  * Parsing utilities.
  * ----------------------------------------------------------------------------- */
 
-char cvsroot_util_c[] = "$Id: util.c 11876 2010-02-27 23:53:33Z wsfulton $";
-
 #include "swig.h"
 #include "cparse.h"
 
@@ -89,4 +87,18 @@ void cparse_normalize_void(Node *n) {
       Delattr(n, "parms");
     }
   }
+}
+
+/* -----------------------------------------------------------------------------
+ * new_node()
+ *
+ * Create an empty parse node, setting file and line number information
+ * ----------------------------------------------------------------------------- */
+
+Node *new_node(const_String_or_char_ptr tag) {
+  Node *n = NewHash();
+  set_nodeType(n,tag);
+  Setfile(n,cparse_file);
+  Setline(n,cparse_line);
+  return n;
 }
