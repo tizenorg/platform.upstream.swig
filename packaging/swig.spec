@@ -1,5 +1,5 @@
 Name:           swig
-Version:        2.0.7
+Version:        3.0.2
 Release:        0
 License:        GPL-3.0+ and BSD-3-Clause
 Summary:        Simplified Wrapper and Interface Generator
@@ -19,6 +19,7 @@ BuildRequires:  pcre-devel
 BuildRequires:  perl
 BuildRequires:  pkg-config
 BuildRequires:  python-devel
+BuildRequires:  bison
 
 %description
 SWIG is a compiler that attempts to make it easy to integrate C, C++,
