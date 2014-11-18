@@ -45,6 +45,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/Tools/config/ac_define_dir.m4 \
 	$(top_srcdir)/Tools/config/ax_boost_base.m4 \
 	$(top_srcdir)/Tools/config/ax_compare_version.m4 \
+	$(top_srcdir)/Tools/config/ax_cxx_compile_stdcxx_11.m4 \
 	$(top_srcdir)/Tools/config/ax_path_generic.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -68,9 +69,10 @@ am_eswig_OBJECTS = CParse/cscanner.$(OBJEXT) CParse/parser.$(OBJEXT) \
 	Modules/d.$(OBJEXT) Modules/directors.$(OBJEXT) \
 	Modules/emit.$(OBJEXT) Modules/go.$(OBJEXT) \
 	Modules/guile.$(OBJEXT) Modules/java.$(OBJEXT) \
-	Modules/lang.$(OBJEXT) Modules/lua.$(OBJEXT) \
-	Modules/main.$(OBJEXT) Modules/modula3.$(OBJEXT) \
-	Modules/module.$(OBJEXT) Modules/mzscheme.$(OBJEXT) \
+	Modules/javascript.$(OBJEXT) Modules/lang.$(OBJEXT) \
+	Modules/lua.$(OBJEXT) Modules/main.$(OBJEXT) \
+	Modules/modula3.$(OBJEXT) Modules/module.$(OBJEXT) \
+	Modules/mzscheme.$(OBJEXT) Modules/nested.$(OBJEXT) \
 	Modules/ocaml.$(OBJEXT) Modules/octave.$(OBJEXT) \
 	Modules/overload.$(OBJEXT) Modules/perl5.$(OBJEXT) \
 	Modules/php.$(OBJEXT) Modules/pike.$(OBJEXT) \
@@ -81,9 +83,10 @@ am_eswig_OBJECTS = CParse/cscanner.$(OBJEXT) CParse/parser.$(OBJEXT) \
 	Modules/utils.$(OBJEXT) Modules/xml.$(OBJEXT) \
 	Preprocessor/cpp.$(OBJEXT) Preprocessor/expr.$(OBJEXT) \
 	Swig/cwrap.$(OBJEXT) Swig/deprecate.$(OBJEXT) \
-	Swig/error.$(OBJEXT) Swig/fragment.$(OBJEXT) \
-	Swig/getopt.$(OBJEXT) Swig/include.$(OBJEXT) \
-	Swig/misc.$(OBJEXT) Swig/naming.$(OBJEXT) Swig/parms.$(OBJEXT) \
+	Swig/error.$(OBJEXT) Swig/extend.$(OBJEXT) \
+	Swig/fragment.$(OBJEXT) Swig/getopt.$(OBJEXT) \
+	Swig/include.$(OBJEXT) Swig/misc.$(OBJEXT) \
+	Swig/naming.$(OBJEXT) Swig/parms.$(OBJEXT) \
 	Swig/scanner.$(OBJEXT) Swig/stype.$(OBJEXT) \
 	Swig/symbol.$(OBJEXT) Swig/tree.$(OBJEXT) \
 	Swig/typeobj.$(OBJEXT) Swig/typemap.$(OBJEXT) \
@@ -165,6 +168,8 @@ GCJ = @GCJ@
 GCJH = @GCJH@
 GO = @GO@
 GO1 = @GO1@
+GO12 = @GO12@
+GO13 = @GO13@
 GOC = @GOC@
 GOGCC = @GOGCC@
 GOOPT = @GOOPT@
@@ -175,6 +180,7 @@ GUILE_CFLAGS = @GUILE_CFLAGS@
 GUILE_CONFIG = @GUILE_CONFIG@
 GUILE_LIBS = @GUILE_LIBS@
 GUILE_SO = @GUILE_SO@
+HAVE_CXX11_COMPILER = @HAVE_CXX11_COMPILER@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -189,6 +195,19 @@ JAVAINC = @JAVAINC@
 JAVALDSHARED = @JAVALDSHARED@
 JAVALIBRARYPREFIX = @JAVALIBRARYPREFIX@
 JAVASO = @JAVASO@
+JSCENABLED = @JSCENABLED@
+JSCOREDYNAMICLINKING = @JSCOREDYNAMICLINKING@
+JSCOREINC = @JSCOREINC@
+JSCOREVERSION = @JSCOREVERSION@
+JSCXXSHARED = @JSCXXSHARED@
+JSINTERPRETERCXX = @JSINTERPRETERCXX@
+JSINTERPRETERLINKFLAGS = @JSINTERPRETERLINKFLAGS@
+JSLDSHARED = @JSLDSHARED@
+JSLIBRARYPREFIX = @JSLIBRARYPREFIX@
+JSSO = @JSSO@
+JSV8DYNAMICLINKING = @JSV8DYNAMICLINKING@
+JSV8ENABLED = @JSV8ENABLED@
+JSV8INC = @JSV8INC@
 LDFLAGS = @LDFLAGS@
 LDSHARED = @LDSHARED@
 LIBC = @LIBC@
@@ -210,6 +229,8 @@ MZDYNOBJ = @MZDYNOBJ@
 MZSCHEME = @MZSCHEME@
 MZSCHEME_SO = @MZSCHEME_SO@
 NDKBUILD = @NDKBUILD@
+NODEGYP = @NODEGYP@
+NODEJS = @NODEJS@
 OBJEXT = @OBJEXT@
 OCAMLBIN = @OCAMLBIN@
 OCAMLC = @OCAMLC@
@@ -251,7 +272,8 @@ PIKECCDLFLAGS = @PIKECCDLFLAGS@
 PIKECONFIG = @PIKECONFIG@
 PIKEDYNAMICLINKING = @PIKEDYNAMICLINKING@
 PIKEINCLUDE = @PIKEINCLUDE@
-PLATFLAGS = @PLATFLAGS@
+PLATCFLAGS = @PLATCFLAGS@
+PLATCXXFLAGS = @PLATCXXFLAGS@
 PY3CONFIG = @PY3CONFIG@
 PY3INCLUDE = @PY3INCLUDE@
 PY3LIB = @PY3LIB@
@@ -289,6 +311,7 @@ SKIP_GCJ = @SKIP_GCJ@
 SKIP_GO = @SKIP_GO@
 SKIP_GUILE = @SKIP_GUILE@
 SKIP_JAVA = @SKIP_JAVA@
+SKIP_JAVASCRIPT = @SKIP_JAVASCRIPT@
 SKIP_LUA = @SKIP_LUA@
 SKIP_MODULA3 = @SKIP_MODULA3@
 SKIP_MZSCHEME = @SKIP_MZSCHEME@
@@ -316,9 +339,6 @@ TCLLIB = @TCLLIB@
 TCL_SO = @TCL_SO@
 TRYLINKINGWITHCXX = @TRYLINKINGWITHCXX@
 VERSION = @VERSION@
-XINCLUDES = @XINCLUDES@
-XLIBSW = @XLIBSW@
-XMKMF = @XMKMF@
 YACC = @YACC@
 YFLAGS = @YFLAGS@
 YODL2HTML = @YODL2HTML@
@@ -421,12 +441,14 @@ eswig_SOURCES = CParse/cscanner.c		\
 		Modules/go.cxx			\
 		Modules/guile.cxx		\
 		Modules/java.cxx		\
+		Modules/javascript.cxx		\
 		Modules/lang.cxx		\
 		Modules/lua.cxx			\
 		Modules/main.cxx		\
 		Modules/modula3.cxx		\
 		Modules/module.cxx		\
 		Modules/mzscheme.cxx		\
+		Modules/nested.cxx  \
 		Modules/ocaml.cxx		\
 		Modules/octave.cxx		\
 		Modules/overload.cxx		\
@@ -448,6 +470,7 @@ eswig_SOURCES = CParse/cscanner.c		\
 		Swig/cwrap.c			\
 		Swig/deprecate.c		\
 		Swig/error.c			\
+		Swig/extend.c			\
 		Swig/fragment.c			\
 		Swig/getopt.c			\
 		Swig/include.c			\
@@ -461,7 +484,7 @@ eswig_SOURCES = CParse/cscanner.c		\
 		Swig/typeobj.c			\
 		Swig/typemap.c			\
 		Swig/typesys.c			\
-		Swig/wrapfunc.c			
+		Swig/wrapfunc.c
 
 eswig_LDADD = @SWIGLIBS@
 
@@ -473,7 +496,7 @@ CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 # Compiling with -DNDEBUG and no optimisations will allow one to do a binary diff of the
 # swig executable as a way of checking before and after the 'beautifying'.
 # Single files can be beautified with the beautify-file target, eg: 'make beautify-file INDENTFILE=chosenfile.c'
-SWIGTYPEDEFS = -T bool -T File -T DohObjInfo -T Parm -T Language -T List -T Typetab -T ModuleFactory -T ErrorMessageFormat -T Symtab -T Hash -T String -T DohBase -T Node -T String_or_char -T SwigType -T Dispatcher -T Wrapper -T DohStringMethods -T DohFileMethods -T DohListMethods -T DohHashMethods -T DOH -T DohIterator -T ParmList -T FILE -T HashNode -T DOHString_or_char
+SWIGTYPEDEFS = -T bool -T File -T DohObjInfo -T Parm -T Language -T List -T Typetab -T ModuleFactory -T ErrorMessageFormat -T Symtab -T Hash -T Scanner -T String -T DohBase -T Node -T String_or_char -T SwigType -T Dispatcher -T Wrapper -T DohStringMethods -T DohFileMethods -T DohListMethods -T DohHashMethods -T DOH -T DohIterator -T ParmList -T FILE -T HashNode -T DOHObj_or_char -T DOHFile -T DOHString -T DOHString_or_char -T UpcallData
 INDENTBAKSDIR = ../IndentBaks
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
@@ -614,6 +637,8 @@ Modules/guile.$(OBJEXT): Modules/$(am__dirstamp) \
 	Modules/$(DEPDIR)/$(am__dirstamp)
 Modules/java.$(OBJEXT): Modules/$(am__dirstamp) \
 	Modules/$(DEPDIR)/$(am__dirstamp)
+Modules/javascript.$(OBJEXT): Modules/$(am__dirstamp) \
+	Modules/$(DEPDIR)/$(am__dirstamp)
 Modules/lang.$(OBJEXT): Modules/$(am__dirstamp) \
 	Modules/$(DEPDIR)/$(am__dirstamp)
 Modules/lua.$(OBJEXT): Modules/$(am__dirstamp) \
@@ -625,6 +650,8 @@ Modules/modula3.$(OBJEXT): Modules/$(am__dirstamp) \
 Modules/module.$(OBJEXT): Modules/$(am__dirstamp) \
 	Modules/$(DEPDIR)/$(am__dirstamp)
 Modules/mzscheme.$(OBJEXT): Modules/$(am__dirstamp) \
+	Modules/$(DEPDIR)/$(am__dirstamp)
+Modules/nested.$(OBJEXT): Modules/$(am__dirstamp) \
 	Modules/$(DEPDIR)/$(am__dirstamp)
 Modules/ocaml.$(OBJEXT): Modules/$(am__dirstamp) \
 	Modules/$(DEPDIR)/$(am__dirstamp)
@@ -679,6 +706,8 @@ Swig/cwrap.$(OBJEXT): Swig/$(am__dirstamp) \
 Swig/deprecate.$(OBJEXT): Swig/$(am__dirstamp) \
 	Swig/$(DEPDIR)/$(am__dirstamp)
 Swig/error.$(OBJEXT): Swig/$(am__dirstamp) \
+	Swig/$(DEPDIR)/$(am__dirstamp)
+Swig/extend.$(OBJEXT): Swig/$(am__dirstamp) \
 	Swig/$(DEPDIR)/$(am__dirstamp)
 Swig/fragment.$(OBJEXT): Swig/$(am__dirstamp) \
 	Swig/$(DEPDIR)/$(am__dirstamp)
@@ -740,12 +769,14 @@ mostlyclean-compile:
 	-rm -f Modules/go.$(OBJEXT)
 	-rm -f Modules/guile.$(OBJEXT)
 	-rm -f Modules/java.$(OBJEXT)
+	-rm -f Modules/javascript.$(OBJEXT)
 	-rm -f Modules/lang.$(OBJEXT)
 	-rm -f Modules/lua.$(OBJEXT)
 	-rm -f Modules/main.$(OBJEXT)
 	-rm -f Modules/modula3.$(OBJEXT)
 	-rm -f Modules/module.$(OBJEXT)
 	-rm -f Modules/mzscheme.$(OBJEXT)
+	-rm -f Modules/nested.$(OBJEXT)
 	-rm -f Modules/ocaml.$(OBJEXT)
 	-rm -f Modules/octave.$(OBJEXT)
 	-rm -f Modules/overload.$(OBJEXT)
@@ -767,6 +798,7 @@ mostlyclean-compile:
 	-rm -f Swig/cwrap.$(OBJEXT)
 	-rm -f Swig/deprecate.$(OBJEXT)
 	-rm -f Swig/error.$(OBJEXT)
+	-rm -f Swig/extend.$(OBJEXT)
 	-rm -f Swig/fragment.$(OBJEXT)
 	-rm -f Swig/getopt.$(OBJEXT)
 	-rm -f Swig/include.$(OBJEXT)
@@ -811,12 +843,14 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@Modules/$(DEPDIR)/go.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Modules/$(DEPDIR)/guile.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Modules/$(DEPDIR)/java.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Modules/$(DEPDIR)/javascript.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Modules/$(DEPDIR)/lang.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Modules/$(DEPDIR)/lua.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Modules/$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Modules/$(DEPDIR)/modula3.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Modules/$(DEPDIR)/module.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Modules/$(DEPDIR)/mzscheme.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Modules/$(DEPDIR)/nested.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Modules/$(DEPDIR)/ocaml.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Modules/$(DEPDIR)/octave.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Modules/$(DEPDIR)/overload.Po@am__quote@
@@ -838,6 +872,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@Swig/$(DEPDIR)/cwrap.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Swig/$(DEPDIR)/deprecate.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Swig/$(DEPDIR)/error.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Swig/$(DEPDIR)/extend.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Swig/$(DEPDIR)/fragment.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Swig/$(DEPDIR)/getopt.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Swig/$(DEPDIR)/include.Po@am__quote@
@@ -1109,7 +1144,7 @@ uninstall-am: uninstall-binPROGRAMS
 
 
 # The executable is copied to the root directory for installation and running the test-suite.
-# This occurs on each invocation of make and is a step towards providing support for multiple 
+# This occurs on each invocation of make and is a step towards providing support for multiple
 # build directories.
 all-local: eswig@EXEEXT@
 	cp -f $(top_builddir)/Source/eswig@EXEEXT@ $(top_builddir)/swig@EXEEXT@
