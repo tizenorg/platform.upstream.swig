@@ -1,10 +1,10 @@
 Name:           swig
-Version:        2.0.12
+Version:        3.0.2
 Release:        0
 License:        GPL-3.0+ and BSD-3-Clause
 Summary:        Simplified Wrapper and Interface Generator
 Url:            http://www.swig.org/
-Group:          Development/Languages/C and C++
+Group:			Platform Development/Utilities
 Source:         http://sourceforge.net/projects/swig/files/swig/%{name}-%{version}/%{name}-%{version}.tar.gz
 Source1:        %{name}.rpmlintrc
 Source1001: 	swig.manifest
@@ -34,7 +34,7 @@ customization options, and more.
 %package doc
 License:        BSD-3-Clause
 Summary:        SWIG Manual
-Group:          Documentation/Man
+Group:          Platform Development/Utilities
 Requires:       swig
 BuildArch:      noarch
 
@@ -53,7 +53,7 @@ This package contains the SWIG manual.
 %package examples
 License:        BSD-3-Clause
 Summary:        SWIG example files
-Group:          Documentation/Howto
+Group:          Platform Development/Utilities
 Requires:       swig
 
 %description examples
@@ -126,5 +126,3 @@ ln -s %{_libdir}/swig/examples %{buildroot}%{docpath}/Examples
 %defattr(-,root,root)
 %{docpath}/Examples
 %{_libdir}/swig
-
-%changelog
